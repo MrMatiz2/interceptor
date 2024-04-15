@@ -2,8 +2,11 @@ package com.example.interceptor.requestInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.InputStream;
 
 public class RequestInterceptor implements HandlerInterceptor {
 
@@ -16,6 +19,9 @@ public class RequestInterceptor implements HandlerInterceptor {
             System.out.println("1 - preHandle() : Before sending request to the Controller");
             System.out.println("Method Type: " + request.getMethod());
             System.out.println("Request URL: " + request.getRequestURI());
+            InputStream inputStream = request.getInputStream();
+            byte[] body = StreamUtils.copyToByteArray(inputStream);
+            System.out.println("body : " + new String(body));
         }
         //* If the Exception is caught, this method will return false
         catch (Exception e) {
